@@ -1,7 +1,7 @@
 #include "WiFi.h"
  
 const char* ssid = "ESP32APTest";
-const char* passphrase = "123456789";
+const char* passphrase = "00001234";
 IPAddress local_ip(192,168,100,1);
 IPAddress gateway(192,168,100,1);
 IPAddress subnet(255,255,255,0);
