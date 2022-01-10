@@ -3,15 +3,11 @@
 
 const char* ssid = "LaLaLaLaLa";
 const char* password = "02134617";
-IPAddress local_ip(192,168,100,1);
-IPAddress gateway(192,168,100,1);
-IPAddress subnet(255,255,255,0);
+
 WiFiServer server(80);
 
 // Variable to store the HTTP request
 String header;
-
-
 // Current time
 unsigned long currentTime = millis();
 // Previous time
@@ -65,19 +61,23 @@ void loop(){
 
             // Display the HTML web page
             client.println("<!DOCTYPE html><html>");
-            client.println("<head><meta name=\"viewport\" content=\"width=device-width, initial-scale=1\">");
+            client.println("<title>Web Page Design</title>");
+            //Head
+            client.println("<head>");
+            client.println("<style type=\"text/css\">");
+            client.println("div {width:100px; height:75px; background-color:red; border:1px solid black;}");
+            client.println("#div2 {transform:rotate(30deg); -ms-transform:rotate(30deg); /* IE 9 */ -moz-transform:rotate(30deg); /* Firefox */ -webkit-transform:rotate(30deg); /* Safari and Chrome */ -o-transform:rotate(30deg); /* Opera */ background-color:yellow;}");
+            client.println("</style>");
             client.println("<link rel=\"icon\" href=\"data:,\">");
-            // CSS to style the on/off buttons 
-            // Feel free to change the background-color and font-size attributes to fit your preferences
-            client.println("<style>html { font-family: Helvetica; display: inline-block; margin: 0px auto; text-align: center;}");
-            client.println(".button { background-color: #4CAF50; border: none; color: white; padding: 16px 40px;");
-            client.println("text-decoration: none; font-size: 30px; margin: 2px; cursor: pointer;}");
-            client.println(".button2 {background-color: #555555;}</style></head>");
-
-            // Web Page Heading
-            client.println("<body><h1>ESP32 Web Server</h1>");
+            client.println("</head>");
+            //End Head
+            //Body
+            client.println("<body>");
             client.println("<div><p>Hello WebServer!!</p></div>");
-            client.println("</body></html>");
+            client.println("<div id=\"div2\">Hello, CSS3!</div>");
+            client.println("</body>");
+            // End Body
+            client.println("</html>");
 
             // The HTTP response ends with another blank line
             client.println();
