@@ -14,6 +14,29 @@ unsigned long previousTime = 0;
 // Define timeout time in milliseconds (example: 2000ms = 2s)
 const long timeoutTime = 2000;
 
+String HTMLcode[] = {
+  "HTTP/1.1 200 OK", // HTTP headers always start with a response code (e.g. HTTP/1.1 200 OK)
+  "Content-type:text/html",
+  "Connection: close", 
+  "", // and a content-type so the client knows what's coming, then a blank line:
+  "<!DOCTYPE html>",
+  "<html>",
+    "<title>Web Page Design</title>",
+    "<head>",
+      "<style type=\"text/css\">",
+        "div {width:100px; height:75px; background-color:red; border:1px solid black;}",
+        "#div2 {transform:rotate(30deg); -ms-transform:rotate(30deg); /* IE 9 */ -moz-transform:rotate(30deg); /* Firefox */ -webkit-transform:rotate(30deg); /* Safari and Chrome */ -o-transform:rotate(30deg); /* Opera */ background-color:yellow;}",
+      "</style>",
+      "<link rel=\"icon\" href=\"data:,\">",
+    "</head>",
+    "<body>",
+      "<h1>Test Message !!!!</h1>",
+      "<div><p>Hello WebServer!!</p></div>",
+      "<div id=\"div2\">Hello, CSS3!</div>",
+    "</body>",
+  "</html>"
+};
+
 void setup() {
   Serial.begin(115200);
 
@@ -51,37 +74,14 @@ void loop(){
           // if the current line is blank, you got two newline characters in a row.
           // that's the end of the client HTTP request, so send a response:
           if (currentLine.length() == 0) {
-            // HTTP headers always start with a response code (e.g. HTTP/1.1 200 OK)
-            // and a content-type so the client knows what's coming, then a blank line:
-            client.println("HTTP/1.1 200 OK");
-            client.println("Content-type:text/html");
-            client.println("Connection: close");
-            client.println();
             
-            // Display the HTML web page
-            client.println("<!DOCTYPE html><html>");
-            client.println("<title>Web Page Design</title>");
-            //Head
-            client.println("<head>");
-            client.println("<style type=\"text/css\">");
-            client.println("div {width:100px; height:75px; background-color:red; border:1px solid black;}");
-            client.println("#div2 {transform:rotate(30deg); -ms-transform:rotate(30deg); /* IE 9 */ -moz-transform:rotate(30deg); /* Firefox */ -webkit-transform:rotate(30deg); /* Safari and Chrome */ -o-transform:rotate(30deg); /* Opera */ background-color:yellow;}");
-            client.println("</style>");
-            client.println("<link rel=\"icon\" href=\"data:,\">");
-            client.println("</head>");
-            //End Head
-            //Body
-            client.println("<body>");
-            client.println("<div><p>Hello WebServer!!</p></div>");
-            client.println("<div id=\"div2\">Hello, CSS3!</div>");
-            client.println("</body>");
-            // End Body
-            client.println("</html>");
-            
-            // The HTTP response ends with another blank line
-            client.println();
-            // Break out of the while loop
-            break;
+            // Print all Html code from array
+            for (String html : HTMLcode){
+              client.println(html);
+            };
+
+            client.println(); // The HTTP response ends with another blank line
+            break; // Break out of the while loop
           } else { // if you got a newline, then clear currentLine
             currentLine = "";
           }
